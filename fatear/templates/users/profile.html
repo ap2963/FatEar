@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ username }}'s Profile{% endblock %}</h1>
+
+  {% if is_self %}
+    Your profile
+  {% elif is_following or is_friend %}
+    You are following {{ username }}
+  {% elif pending_request %}
+    {% if requested_by_user %}
+      Friend request sent 
+    {% else %}
+      Pending friend request
+    {% endif %}
+  {% else %}
+    <form method="post">
+      <input type="submit" name="follow" value="Follow">
+      <input type="submit" name="request" value="Send Friend Request">
+    </form>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  {% if is_self or is_following or is_friend %}
+    <a href="{{ url_for('users.followers', username=username) }}">Followers</a>
+    <a href="{{ url_for('users.following', username=username) }}">Following</a>
+  {% endif %}
+{% endblock %}

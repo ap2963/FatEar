@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Search Users{% endblock %}</h1>
+
+{% endblock %}
+
+{% block content %}
+<form method="post">
+  <div>
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username">
+  </div>
+  <button type="submit">Search</button>
+</form>
+{% endblock %}
+

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Music Database{% endblock %}</h1>
+{% endblock %}
+
+  {% block content %}
+  <form method="post">
+    <div>
+      <label for="song_title">Song Title</label>
+      <input type="text" name="song_title" id="song_title">
+    </div>
+    <div>
+      <label for="artist_fname">Artist First Name</label>
+      <input type="text" name="artist_fname" id="artist_fname">
+    </div>
+    <div>
+      <label for="artist_lname">Artist Last Name</label>
+      <input type="text" name="artist_lname" id="artist_lname">
+    </div>
+    <div>
+      <label for="genre">Genre</label>
+      <input type="genre" name="genre" id="genre">
+    </div>
+    <button type="submit">Search</button>
+  </form>
+{% endblock %}
+
+

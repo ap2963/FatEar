@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ username }} Following{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for result in results %}
+  <div class="shadow p-3 mb-5 bg-body rounded">
+    <h3><a href="{{ url_for('users.profile', username=result['follows']) }}">{{ result['follows'] }}</a></h3>
+  </div>
+  {% endfor %}
+{% endblock %}
+

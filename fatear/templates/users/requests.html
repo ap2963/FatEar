@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Friend Requests{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for result in results %}
+  <div class="shadow p-3 mb-5 bg-body rounded">
+    <h3>{{ result['requestSentBy'] }}</h3>
+  </div>
+  {% endfor %}
+{% endblock %}
+

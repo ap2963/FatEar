@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Results{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for result in results %}
+  <div class="shadow p-3 mb-5 bg-body rounded">
+    <h3><a href="{{ url_for('users.profile', username=result['username']) }}">{{ result['username'] }}</a></h3>
+    <h3>{{ result['fname'] }} {{ result['lname'] }}</h3>
+  </div>
+  {% endfor %}
+{% endblock %}
+
