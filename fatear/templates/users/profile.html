@@ -1,30 +1,45 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}{{ username }}'s Profile{% endblock %}</h1>
+  <h1>{% block title %}{{ details.fname }} '{{ details.nickname }}' {{ details.lname }} | @{{ profile }}{% endblock %}</h1>
+  
+  {% if view == "self" %}
+    <span class="badge rounded-pill text-bg-primary">Your Profile</span>
+  {% elif view == "friend" %}
+    <span class="badge rounded-pill text-bg-success">Friend</span>
+  {% elif view == "follower" %}
+    <span class="badge rounded-pill text-bg-success">Following</span>
+  {% elif view == 'pending' %}
+      <span class="badge rounded-pill text-bg-warning">Request Sent</span>
+  {% elif view == 'request-sent' %}
+      <a class="btn btn-warning" href="{{ url_for('users.check_requests') }}" role="button">View Pending Request</a>
+  {% elif view == 'restricted' %}
 
-  {% if is_self %}
-    Your profile
-  {% elif is_following or is_friend %}
-    You are following {{ username }}
-  {% elif pending_request %}
-    {% if requested_by_user %}
-      Friend request sent 
-    {% else %}
-      Pending friend request
-    {% endif %}
-  {% else %}
-    <form method="post">
-      <input type="submit" name="follow" value="Follow">
-      <input type="submit" name="request" value="Send Friend Request">
-    </form>
   {% endif %}
+
 {% endblock %}
 
-
 {% block content %}
-  {% if is_self or is_following or is_friend %}
-    <a href="{{ url_for('users.followers', username=username) }}">Followers</a>
-    <a href="{{ url_for('users.following', username=username) }}">Following</a>
+<div>
+  {% if view == 'follower' %}
+    <form action="{{ url_for('users.send_request', username=profile) }}" method="post">
+      <input class="btn btn-primary" type="submit" value="Send Friend Request">
+    </form>
   {% endif %}
+
+  {% if view != "restricted" %}
+  <div><a href="{{ url_for('users.see_user_connections', username=profile) }}">My connections</a></div>
+  <div><a href="{{ url_for('users.see_user_activity', username=profile) }}">My activity</a></div>
+
+  {% else %}
+  <form method="post">
+    <input class="btn btn-success" type="submit" value="Follow">
+  </form>
+  <form action="{{ url_for('users.send_request', username=profile) }}" method="post">
+    <input class="btn btn-primary" type="submit" value="Send Friend Request">
+  </form>
+  
+  {% endif %}
+
+</div>
 {% endblock %}

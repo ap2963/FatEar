@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<div><br>
+<div><h4>{{ song.title }}</h4></div><br>
+
+<div><h5>Artist(s):</h5></div>
+  {% if artists %}
+    {% for artist in artists %}
+      <div>
+        <a href="{{ url_for ('music.artist_page', artistID=song.artistID) }}">
+        <span>{{ artist.fname }} {{ artist.lname }}</span></a>
+    {% endfor %}
+  {% else %}
+    <div>No artists on record for this song</div>
+  {% endif %}
+</div>
+<br>
+
+<div>
+  <div><h5>Genre(s):</h5></div>
+  {% if genres %}
+    {% for genre in genres %}
+      <span>{{ genre.genre }}<span>
+        {% if not loop.last %}
+          <span>, </span>
+        {% endif %}
+    {% endfor %}
+  {% else %}
+    <div>No genre on record for this song</div>
+  {% endif %}
+</div>
+<br>
+{% if registered %}
+<div>
+<h4><a href="{{ url_for('music.rate_song', songID=song.songID) }}">Rate Song</a></h4>
+<h4><a href="{{ url_for('music.review_song', songID=song.songID) }}">Review Song</a></h4><br>
+
+{% endif %}
+
+{% endblock %}

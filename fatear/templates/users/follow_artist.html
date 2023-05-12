@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div><br>
+  <h4>Select an artist to follow</h4>
+
+  <form method="post">
+      {% for artist in artists %}
+        <input type="radio" id="{{ artist.artistID }}" name="artist" value="{{ artist.artistID }}">
+        <label for="{{ artist.artistID }}">{{ artist.fname }} {{ artist.lname }}</label><br>
+      {% endfor %}
+    <input class="btn btn-primary" type="submit" value="Submit">
+  </form>
+</div>
+
+{% endblock %}

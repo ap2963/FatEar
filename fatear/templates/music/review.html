@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div><br>
+  <h4>Write a review for {{ song.title }}</h4>
+
+  <form method="post">
+    <input type="textarea", id="review", name="text">
+    <label for="review">Review</label>
+    <input class="btn btn-primary" type="submit" value="Submit">
+  </form>
+</div>
+
+{% endblock %}

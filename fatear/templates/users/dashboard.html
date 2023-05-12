@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}My Dashboard{% endblock %}</h1>  
+{% endblock %}
+
+{% block content %}
+
+<div>
+  <div>
+    <h4><a href="{{ url_for('users.view_new_activity') }}">New Activity</a></h4>
+    <span>See new activity from friends and people you follow</span>
+  </div>
+
+  <div>
+    <h4><a href="{{ url_for('users.view_new_artist_activity') }}">New Music</a></h4>
+    <span>See new content from artists you follow</span>
+  </div>
+
+  <div>
+    <h4><a href="{{ url_for('users.follow_artist') }}">Follow an Artist</a></h4>
+    <span>Find a new artist to follow</span>
+  </div>
+
+</div>
+
+
+{% endblock %}

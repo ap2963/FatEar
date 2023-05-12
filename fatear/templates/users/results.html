@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Results{% endblock %}</h1>
+  <h1>{% block title %}User Search Results{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  {% for result in results %}
-  <div class="shadow p-3 mb-5 bg-body rounded">
-    <h3><a href="{{ url_for('users.profile', username=result['username']) }}">{{ result['username'] }}</a></h3>
-    <h3>{{ result['fname'] }} {{ result['lname'] }}</h3>
+<div>
+  {% for user in users %}
+
+  <div>
+    <span><a href="{{ url_for('users.view_profile', username=user.username) }}">{{ user.name }}</a> | @{{ user.username }}</h4></span>
   </div>
+
   {% endfor %}
+</div>
+
 {% endblock %}
+
+
 

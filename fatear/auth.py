@@ -23,7 +23,7 @@ def register():
         cursor.execute(query, (username))
         data = cursor.fetchone()
 
-        if (data):
+        if data:
             error = f"User {username} is already registered"
             cursor.close()
         else:
@@ -35,7 +35,8 @@ def register():
             cursor.close()
             return render_template('users/index.html')
         
-        flash(error)
+        if error:  
+          flash(error)
 
     return render_template('auth/register.html')
 
@@ -53,10 +54,10 @@ def login():
         data = cursor.fetchone()
         cursor.close()
 
-        if (data):
+        if data:
             session.clear()
             session['user'] = username
-            return redirect(url_for('users.index'))
+            return redirect(url_for('users.dashboard'))
         else:
             error = "Invalid username or password"
             flash(error)

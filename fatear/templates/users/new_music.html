@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Artist Activity{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+  <div><h4>New Songs</h4></div>
+  {% if releases %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Song</th>
+          <th scope="col">Artist(s)</th>
+          <th scope="col">Release Date</th>
+          <th scope="col">URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for release in releases %}
+        <tr>
+          <td>{{ release.title }}</td>
+          {% set artists = songs|selectattr('songID', 'equalto', release.songID) %}
+          <td>
+            {% if artist %}
+              {% for artist in artists %}
+              <td>
+                <span>{{ artist.fname }} {{ artist.lname }}</span>
+                {% if not loop.last %}
+                  <span>, </span>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <span>No artists available for this song</span>
+            {% endif %}
+          </td>
+          <td>{{ release.releaseDate }}</td>
+          <td>{{ release.songURL }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+  <div>No new music from artists you follow</div>
+{% endif %}
+
+
+{% endblock %}

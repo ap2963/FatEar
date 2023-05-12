@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Activity{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div><h4>Song Ratings</h4></div>
+{% if ratings %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Song</th>
+        <th scope="col">Artist(s)</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rating in ratings %}
+      <tr>
+          {% set a_user = user_info|selectattr('username', 'equalto', rating.username|first) %}
+          <td>{{ a_user.fname }} | @{{ a_user.username }}</td>
+          {% set songs = songs|selectattr('songID', 'equalto', rating.songID) %}
+                {% for song in songs %}
+                  {% if loop.first %}
+                    <td>{{ song.title }}</td>
+                  {% endif %}
+                  <td>{{ song.fname }} {{ song.lname }}</td>
+                  {% if not loop.last %}
+                    <td>, </td>
+                  {% endif %}
+                  <td>{{ rating.stars }}</td>
+                  <td>{{ rating.ratingDate.strftime('%b %d, %Y') }}</td>
+                {% endfor %} 
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div>No new ratings</div>
+  {% endif %}
+<br>
+
+<div><h4>Song Reviews</h4></div>
+  {% if reviews %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Song</th>
+        <th scope="col">Artist(s)</th>
+        <th scope="col">Review</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for review in reviews %}
+      <tr>
+          {% set a_user = user_info|selectattr('username', 'equalto', review.username)|first %}
+          <td>{{ a_user.fname }} | @{{ a_user.username }}</td>
+          {% set songs = songs|selectattr('songID', 'equalto', review.songID) %}
+          {% for song in songs %}
+            {% if loop.first %}
+              <td>{{ song.title }}</td>
+            {% endif %}
+                  <td>{{ song.fname }} {{ song.lname }}</td>
+                  {% if not loop.last -%}
+                    <td>, </td>
+                  {% endif %}
+                  <td>{{ review.reviewText }}</td>
+                  <td>{{ review.reviewDate.strftime('%b %d, %Y') }}</td>
+                {% endfor %} 
+              </tr>
+      {% endfor %}
+        
+      </tbody>
+    </table>
+  {% else %}
+    <div>No new reviews</div>
+  {% endif %}
+ 
+
+
+
+{% endblock %}

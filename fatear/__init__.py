@@ -13,29 +13,27 @@ def create_app(test_config=None):
     if test_config is None:
     # load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
-    
     else:
     # load the test config if passed in
         app.config.from_mapping(test_config)
-
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
-                        
+
     db.init_app(app)
     app.register_blueprint(auth.bp)
     app.register_blueprint(users.bp)
     app.register_blueprint(music.bp)
 
-    # home page
     @app.route('/')
     def home():
         if g.user is None:
             return redirect(url_for('auth.login'))
-        else:
-            return redirect(url_for('users.index'))
         
+        return redirect(url_for('users.dashboard'))
+        
+
     return app
 

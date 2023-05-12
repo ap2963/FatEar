@@ -5,10 +5,18 @@
 {% endblock %}
 
 {% block content %}
-  {% for result in results %}
-  <div class="shadow p-3 mb-5 bg-body rounded">
-    <h3>{{ result['requestSentBy'] }}</h3>
-  </div>
+  {% for request in requests %}
+    {% set user = users|selectattr('username', 'equalto', request.requestSentBy)|first %}
+    <div class="card w-50">
+      <div class="card-body">
+        <h5 class="card-title">New Friend Request</h5><br>
+        <h6 class="card-subtitle mb-2 text-body-secondary">{{ user.fname }} {{ user.lname }}</h6>
+        <p class="card-text"><a href="{{ url_for ('users.view_profile', username=request.requestSentBy) }}">@{{ user.username }}</a></p>
+        <b><a href="{{ url_for('users.respond', username=request.requestSentBy) }}">Respond</a></b>
+      </div>
+    </div>
+
   {% endfor %}
 {% endblock %}
+
 

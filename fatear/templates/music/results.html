@@ -1,15 +1,42 @@
 {% extends 'base.html' %}
 
+{% block header %}
+  <h1>{% block title %}Music Database{% endblock %}</h1>
+  <style>
+    table, th, td {
+      border:1px solid black;
+    }
+    </style>
+{% endblock %}
+
 {% block content %}
-  {% for result in results %}
-    <article class="song">
-      <header>
-        <div>
-          <h1>{{ result['title'] }}</h1>
-          <div>{{ result['artistID'] }}</div>
-          <div>{{ result['songURL'] }}</div>
-        </div>
-      </header>
-    </article>
-  {% endfor %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Artist(s)</th>
+      <th scope="col">Year Released</th>
+      <th scope="col">Avg Rating</th>
+    </tr>
+  </thead>
+    {% for song in songs %}
+      <tr>
+        <td><a href="{{ url_for ('music.song_details', songID=song.songID) }}">{{ song.title }}</a></td>
+        <td>
+          {% for artist in artists|selectattr('songID', 'equalto', song.songID) %}
+            <span><a href="{{ url_for ('music.artist_page', artistID=artist.artistID) }}">{{ artist.fname }} {{ artist.lname }}</a></span>
+            {% if not loop.last %}
+              <span>, </span>
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>{{ song.releaseDate.strftime('%Y') }}</td>
+        {% if song.mean_rating %}
+          <td>{{ song.mean_rating }}</td>
+        {% else %}
+          <td>No ratings yet</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </table>
 {% endblock %}

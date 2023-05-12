@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div><br>
+  <h4>Choose a rating for {{ song.title }}</h4>
+
+  <form method="post">
+    {% for i in [1, 2, 3, 4, 5] %}
+    <div>
+      <input type="radio" id="1" name="stars" value=1>
+      <label for="1">1</label><br>
+    </div>
+    <div>
+      <input type="radio" id="2" name="stars" value=2>
+      <label for="2">2</label><br>
+    </div>
+    <div>
+      <input type="radio" id="3" name="stars" value=3>
+      <label for="3">3</label><br>
+    </div>
+    <div>
+      <input type="radio" id="4" name="stars" value=4>
+      <label for="4">4</label><br>
+    </div>
+    <div>
+      <input type="radio" id="5" name="stars" value=5>
+      <label for="5">5</label>
+    </div>
+    <div>
+      <input class="btn btn-primary" type="submit" value="Submit">
+    </div>
+  </form>
+</div>
+
+{% endblock %}

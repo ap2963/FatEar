@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ details.fname }}'s Connections{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+<div><h4>Friends</h4></div>
+{% if friends %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Profile</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for friend in friends %}
+    <tr>
+      {% set a_user = users|selectattr('username', 'equalto', friend.username)|first %}
+      <td>{{ a_user.fname }} {{ a_user.lname }}</td>
+      <td><a href="{{ url_for('users.view_profile', username=a_user.username) }}">@{{ a_user.username }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+    <div>Not friends with anybody</div><br>
+{% endif %}
+
+<div><h4>Followers</h4></div>
+{% if friends %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Profile</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for follower in followers %}
+    <tr>
+      {% set a_user = users|selectattr('username', 'equalto', follower.username)|first %}
+      <td>{{ a_user.fname }} {{ a_user.lname }}</td>
+      <td><a href="{{ url_for('users.view_profile', username=a_user.username) }}">@{{ a_user.username }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+    <div>No followers</div><br>
+{% endif %}
+
+<div><h4>Following</h4></div>
+{% if following %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Profile</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for follows in following %}
+    <tr>
+      {% set a_user = users|selectattr('username', 'equalto', follows.username)|first %}
+      <td>{{ a_user.fname }} {{ a_user.lname }}</td>
+      <td><a href="{{ url_for('users.view_profile', username=a_user.username) }}">@{{ a_user.username }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+    <div>Not following anybody</div><br>
+{% endif %}
+
+{% endblock %}

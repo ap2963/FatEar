@@ -7,11 +7,14 @@
 
 {% block content %}
 <form method="post">
-  <div>
-    <label for="username">Username</label>
-    <input type="text" name="username" id="username">
+  <div class="input-group w-75 mb-3 p-1">
+    <input type="text" id="user-search" name="search" class="form-control" placeholder="Search by name or username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <input class="btn btn-primary" type="submit" value="Search">
+    </div>
   </div>
-  <button type="submit">Search</button>
 </form>
 {% endblock %}
+
+
 
